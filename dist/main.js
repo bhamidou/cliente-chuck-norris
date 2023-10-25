@@ -1,0 +1,1 @@
+document.addEventListener("keydown",(function(n){"r"==n.key&&async function(n){const e=await fetch(n,{method:"GET",body:JSON.stringify()});var t;t=(await e.json()).value,document.getElementById("jokes").innerHTML=t}("https://api.chucknorris.io/jokes/random")}));
