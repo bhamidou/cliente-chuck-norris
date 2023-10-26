@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="shortcut icon" href="https://api.chucknorris.io/img/favicon.ico" type="image/x-icon">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        float: right;
+    }
+
+    p {
+        font-size: 20px;
+    }
+    #rand-btn {
+  display: flex;
+  justify-content: center;
+}
+</style>
+
+<body>
+    <h1 style="font-size: 50px; font-weight: bold; text-align: center;">API BadrWeb Chuck Norris</h1>
+    <div class="container">
+        <h4>Traducir</h4>
+        <select id="list_lang">
+        </select>
+    </div>
+    <img src="https://api.chucknorris.io/img/chucknorris_logo_coloured_small@2x.png" alt="" width="300px">
+
+    <br>
+    <br>
+    <h2 style="text-align: center;">
+        ¡Bienvenido a la web de Chuck Norris!
+    </h2>
+    <p>
+        En nuestra página, puedes disfrutar de los mejores chistes y hechos asombrosos sobre la legendaria figura de
+        Chuck Norris. Te ofrecemos dos formas sencillas de encontrar el contenido que más te divierta:
+    </p>
+    <h2 style="text-align: center;">
+        Búsqueda por frase concreta:
+    </h2>
+
+    <p>
+        ¿Tienes una frase o idea en mente que quieres explorar? Solo tienes que ingresarla en nuestra barra de búsqueda
+        y verás resultados instantáneos relacionados con tu búsqueda. Encuentra los chistes y hechos específicos que te
+        hacen reír.
+    </p>
+
+    <input style="width: 500px; height: 30px;" type="text" name="" id="search-phrase" placeholder="Buscar frase que contenga ...">
+    <div id="rtn-search">
+    </div>
+
+
+
+    <h2 style="text-align: center;">Por categorías</h2>
+    <p>
+        Si prefieres explorar diferentes temas, te ofrecemos una amplia gama de categorías temáticas para elegir. Desde
+        animales hasta viajes, nuestras categorías te permiten navegar y descubrir chistes y hechos relacionados con tus
+        intereses.
+    </p>
+
+    <table id="table">
+        <thead>
+            <th>Categorías</th>
+        </thead>
+        <tbody id="categorias">
+
+        </tbody>
+    </table>
+
+    <div >
+        <h2 style="text-align: center;">Frase random</h2>
+        <p>
+            ¿Te apetece una sorpresa? Haz clic en nuestro botón "Frase Random" y descubre una frase de Chuck Norris al
+            azar. ¡Quién sabe qué perla de sabiduría o chiste genial te aguarda!
+        </p>
+        <button id="random" href="formulario.html">Sin miedo al éxito</button>
+            <div ></div>
+
+    </div>
+    <script src="main.main.js"></script>
+
+</body>
+
+</html>
