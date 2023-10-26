@@ -1,51 +1,57 @@
 import { asyncFunc } from "./funcs.js";
 import { Category } from "./ClassCategory.js";
-import { Phrase } from "./ClassFrase.js";
-import { addElement } from "./funcs.js";
-import { pressKey } from "./funcs.js";
+import { translate } from "./funcs.js";
+import { getLangsAvaible } from "./funcs.js";
 import { addJokes } from "./funcs.js";
 
 const jokes = "https://api.chucknorris.io/jokes/random";
-let category = "https://api.chucknorris.io/jokes/random?category=";
 let queryType = "https://api.chucknorris.io/jokes/random?query=";
+let queryFinal = "https://api.chucknorris.io/jokes/random?category=";
 
 function setCategory() {
+  let getCategoryLocal = localStorage.getItem("category");
 
-  let query = localStorage.getItem("category");
+  let parseGetCat = JSON.parse(getCategoryLocal);
 
-  let parseCat = JSON.parse(query);
-    console.log(parseCat)
-    let cate = document.getElementById("h2-cat");
+  let cate = document.getElementById("h2-cat");
 
-    if(parseCat.type == "random"){
-        category = jokes
-        cate.innerHTML = "Random"
+  if (parseGetCat.type == "random") {
+    queryFinal = jokes;
+    cate.innerHTML = "Random";
 
-    }else if (parseCat.type == undefined){
-      cate.innerHTML = cate.innerHTML + " " + parseCat.name;
-      category = category + parseCat.name;
-
-    }else{
-      cate.innerHTML = parseCat.type  + ': "' +parseCat.name+ '"';
-      category = queryType + parseCat.name
-    }
+  } else if (parseGetCat.type == undefined) {
+    cate.innerHTML = cate.innerHTML + " " + parseGetCat.name;
+    queryFinal = queryFinal + parseGetCat.name;
     
-    
+  } else {
+    cate.innerHTML = parseGetCat.type + ': "' + parseGetCat.name + '"';
+    queryFinal = queryType + parseGetCat.name;
+  }
+
 }
+
 setCategory();
 
-asyncFunc(category).then((res) => {
-    console.log(category)
+asyncFunc(queryFinal).then((res) => {
+    let getLangLocal = localStorage.getItem("lang");
+
+    let parseGetLang = JSON.parse(getLangLocal);
+
     addJokes(res.value);
+    
+    setTranslate(parseGetLang)
 });
 
 document.addEventListener("keydown", function (keyBoardEvent) {
-    if (keyBoardEvent.key == "r") {
-    //   console.log(category)
-    asyncFunc(category)
+  if (keyBoardEvent.key == "r") {
+    asyncFunc(queryFinal)
       .then((data) => {
-        // console.log(data);
+        let getLangLocal = localStorage.getItem("lang");
+        let parseGetLang = JSON.parse(getLangLocal);
+
         addJokes(data.value);
+        
+        setTranslate(parseGetLang)
       })
       .catch((error) => {
         console.log(error);
@@ -53,4 +59,27 @@ document.addEventListener("keydown", function (keyBoardEvent) {
   }
 });
 
-// pressKey(category)
+const langs = "http://172.42.61.58:5050/languages";
+
+getLangsAvaible(langs);
+
+let list = document.getElementById("list_lang");
+
+list.addEventListener("change", function (event) {
+    let lang = event.currentTarget.selectedOptions[0].id
+    
+    var langString = JSON.stringify(lang);
+    localStorage.setItem("lang", langString);
+
+    setTranslate(lang)
+})
+
+function setTranslate(languaje){
+
+    let jokes = document.getElementById("jokes");
+
+    translate(jokes.innerText,languaje)
+    .then((res)=>{
+        jokes.innerHTML = res.translatedText
+    })
+}

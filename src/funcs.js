@@ -14,11 +14,16 @@ export function getLangsAvaible(langs) {
         let opt = document.createElement("option");
         opt.text = element.name;
         opt.id = element.code;
-        if (element.name == "Spanish") {
-          opt.selected = "selected";
-          //   let parseJSON = JSON.stringify(element.code);
-          //   localStorage.setItem("lang", parseJSON);
+        let getLangLocal = localStorage.getItem("lang");
+        let parseGetLang = JSON.parse(getLangLocal);
+
+        if(parseGetLang == null){
+            parseGetLang = "en"
         }
+
+        if (element.code == parseGetLang) {
+                opt.selected = "selected";
+            }
         list.options.add(opt);
       });
     })
@@ -56,7 +61,8 @@ export function addJokes(value) {
 }
 
 export async function translate(query, lang) {
-  const res = await fetch(localTrans, {
+//   const localTrans = ;
+  const res = await fetch("http://172.42.61.58:5050/translate", {
     method: "POST",
     body: JSON.stringify({
       q: query,
@@ -95,22 +101,3 @@ export function addElement(element) {
 //             }
 //     generateTable(data)
 // });
-
-// function translatePage(){
-//     let body = document.body.getElementsByTagName('*');
-
-//     let i = 0
-//     while(i<body.length){
-//         if(body[i].textContent != null){
-//             translate( body[i].textContent, "fr")
-//             .then((res)=>{
-//                 console.log("prueba texto")
-//                 body[i].textContent = res
-//             }).catch((error)=>{
-//                 console.log(error)
-//             })
-//         }
-//         i++
-//     }
-
-// };
