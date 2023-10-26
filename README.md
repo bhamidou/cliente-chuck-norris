@@ -14,15 +14,14 @@ A continuación, se describe cómo utilizar este cliente:
 
 ### Buscar por frase
 
-Para buscar chistes que contengan una frase específica, utiliza la función `searchByPhrase(phrase)`.
-
+Para buscar chistes que contengan una frase específica, utiliza la función.
 ### Buscar por categoría
 
-Para obtener chistes de una categoría específica, utiliza la función `searchByCategory(category)`.
+Para obtener chistes de una categoría específica, utiliza la función.
 
 ### Broma aleatoria
 
-Para obtener una broma aleatoria de Chuck Norris, utiliza la función `getRandomJoke()`.
+Para obtener una broma aleatoria de Chuck Norris, utiliza la función.
 
 ### Traducción
 
