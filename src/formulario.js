@@ -3,65 +3,91 @@ import { Category } from "./ClassCategory.js";
 import { translate } from "./funcs.js";
 import { getLangsAvaible } from "./funcs.js";
 import { addJokes } from "./funcs.js";
+import { getRandNum } from "./funcs.js";
+import { setHeaderPage } from "./funcs.js";
+import { getHeaderPage } from "./funcs.js";
+import { getLocalValue } from "./funcs.js";
+import { setLocalLang } from "./funcs.js";
 
 const jokes = "https://api.chucknorris.io/jokes/random";
-let queryType = "https://api.chucknorris.io/jokes/random?query=";
+let queryType = "https://api.chucknorris.io/jokes/search?query=";
 let queryFinal = "https://api.chucknorris.io/jokes/random?category=";
 
 function setCategory() {
-  let getCategoryLocal = localStorage.getItem("category");
-
-  if (getCategoryLocal != null) {
-    let parseGetCat = JSON.parse(getCategoryLocal);
-
-    let cate = document.getElementById("h2-cat");
+  if (getLocalValue("category") != null) {
+    let parseGetCat = getLocalValue("category");
 
     if (parseGetCat.type == "random") {
       queryFinal = jokes;
-      cate.innerHTML = "Random";
+      setHeaderPage("Random");
     } else if (parseGetCat.type == undefined) {
-      cate.innerHTML = cate.innerHTML + " " + parseGetCat.name;
+      setHeaderPage(getHeaderPage() + " " + parseGetCat.name);
+
       queryFinal = queryFinal + parseGetCat.name;
     } else {
-      cate.innerHTML = parseGetCat.type + ': "' + parseGetCat.name + '"';
+      setHeaderPage(parseGetCat.type + ': "' + parseGetCat.name + '"');
+
       queryFinal = queryType + parseGetCat.name;
     }
   } else {
-    document.getElementById("h2-cat").innerHTML =
-      "Don't have choose option for joke, you will redirect in 6s to index";
+    setHeaderPage(
+      "Don't have choose option for joke, you will redirect in 6s to index"
+    );
+
     setTimeout(() => {
       window.location.href = "index.html";
     }, 6000);
   }
-  let getLangLocal = localStorage.getItem("lang");
-  if(getLangLocal == null){
-    let langString = JSON.stringify("en");
-    localStorage.setItem("lang", langString);
+
+  if (getLocalValue("lang") == null) {
+    setLocalLang("en");
   }
 }
 
 setCategory();
 
 asyncFunc(queryFinal).then((res) => {
-  let getLangLocal = localStorage.getItem("lang");
+  if (res.total) {
+    let rnd = getRandNum(0, res.total);
 
-  let parseGetLang = JSON.parse(getLangLocal);
+    addJokes(res.result[rnd].value);
 
-  addJokes(res.value);
+    if (res.result[rnd].categories >= 1) {
+      setHeaderPage(res.result[rnd].categories[0]);
+    }
+  } else {
+    addJokes(res.value);
+  }
 
-  setTranslate(parseGetLang);
+  setTranslate(getLocalValue("lang"));
 });
 
 document.addEventListener("keydown", function (keyBoardEvent) {
   if (keyBoardEvent.key == "r") {
     asyncFunc(queryFinal)
       .then((data) => {
-        let getLangLocal = localStorage.getItem("lang");
-        let parseGetLang = JSON.parse(getLangLocal);
+        if (data.total) {
+          let rnd = getRandNum(0, data.total);
+          addJokes(data.result[rnd].value);
 
-        addJokes(data.value);
+          let parseGetCat = getLocalValue("category");
 
-        setTranslate(parseGetLang);
+          if (data.result[rnd].categories.length >= 1) {
+            setHeaderPage(
+              parseGetCat.type +
+                ': "' +
+                parseGetCat.name +
+                '"' +
+                " category: " +
+                data.result[rnd].categories[0]
+            );
+          } else {
+            setHeaderPage(parseGetCat.type + ': "' + parseGetCat.name + '"');
+          }
+        } else {
+          addJokes(data.value);
+        }
+        setTranslate(getLocalValue("lang"));
       })
       .catch((error) => {
         console.log(error);
@@ -88,6 +114,6 @@ function setTranslate(languaje) {
   let jokes = document.getElementById("jokes");
 
   translate(jokes.innerText, languaje).then((res) => {
-    jokes.innerHTML = res.translatedText;
+    jokes.textContent = res.translatedText;
   });
 }

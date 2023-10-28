@@ -87,3 +87,29 @@ export function addElement(element) {
   currentDiv.appendChild(hrElement);
   document.body.insertBefore(newDiv, currentDiv);
 }
+
+export function getRandNum(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function setHeaderPage(setvalue){
+  document.getElementById("h2-cat").textContent = setvalue
+}
+
+export function getHeaderPage(){
+  return document.getElementById("h2-cat").textContent
+}
+
+export function getLocalValue(value){
+  let getLocalValue = localStorage.getItem(value);
+
+  return JSON.parse(getLocalValue);
+}
+
+export function setLocalLang(lang){
+  let langString = JSON.stringify(lang);
+    localStorage.setItem("lang", langString);
+}
+
