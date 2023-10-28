@@ -78,7 +78,7 @@ function setTranslate(languaje){
 
     let jokes = document.getElementById("jokes");
 
-    translate(jokes.innerText,languaje)
+    translate(jokes.innerText, languaje)
     .then((res)=>{
         jokes.innerHTML = res.translatedText
     })
