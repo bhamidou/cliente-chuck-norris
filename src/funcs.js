@@ -66,8 +66,8 @@ export async function translate(query, lang) {
     method: "POST",
     body: JSON.stringify({
       q: query,
-      source: "en",
-      target: "es",
+      source: "auto",
+      target: lang,
       format: "text",
       api_key: "3cf2a2c6-e2bc-4f57-94cb-1ce6b131e981",
     }),
