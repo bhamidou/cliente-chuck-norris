@@ -59,7 +59,7 @@ document.addEventListener("keydown", function (keyBoardEvent) {
   }
 });
 
-const langs = "http://172.42.61.58:5050/languages";
+const langs = "https://translate.badrweb.es/languages";
 
 getLangsAvaible(langs);
 

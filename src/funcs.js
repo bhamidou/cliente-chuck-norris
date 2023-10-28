@@ -62,14 +62,14 @@ export function addJokes(value) {
 
 export async function translate(query, lang) {
 //   const localTrans = ;
-  const res = await fetch("http://172.42.61.58:5050/translate", {
+  const res = await fetch("https://translate.badrweb.es/translate", {
     method: "POST",
     body: JSON.stringify({
       q: query,
       source: "auto",
       target: lang,
       format: "text",
-      api_key: "",
+      api_key: "3cf2a2c6-e2bc-4f57-94cb-1ce6b131e981",
     }),
     headers: { "Content-Type": "application/json" },
   });
@@ -87,17 +87,3 @@ export function addElement(element) {
   currentDiv.appendChild(hrElement);
   document.body.insertBefore(newDiv, currentDiv);
 }
-
-// let listlang = document.getElementById("list_lang");
-
-// listlang.addEventListener("change", function () {
-//         let i = 0;
-//             while (i < listlang.length) {
-//                 if (listlang[i].selected) {
-//                     let parseJSON = JSON.stringify(listlang[i].id);
-//                     localStorage.setItem("lang",parseJSON)
-//                 }
-//                 i++;
-//             }
-//     generateTable(data)
-// });
